@@ -17,7 +17,7 @@ struct series_page: View {
                     .frame(width:396, height:210)
                 HStack {
                     Text("Dr. House")
-                        .padding(.leading)
+                        .padding(.leading, 5)
                         .foregroundStyle(.white)
                         .font(.system(size:25))
                         .bold()
@@ -25,7 +25,7 @@ struct series_page: View {
                 }
                 HStack {
                     Text("2011")
-                        .padding(.leading)
+                        .padding(.leading, 5)
                         .foregroundStyle(.gray)
                         .font(.system(size:15))
                     
@@ -35,10 +35,35 @@ struct series_page: View {
                         .cornerRadius(3)
                     
                     Text("8 temporadas")
-
                         .foregroundStyle(.gray)
                         .font(.system(size:15))
+                    
                     Spacer()
+                }
+                ZStack {
+                    VStack {
+                        Rectangle()
+                            .frame(width: 390, height: 50)
+                            .cornerRadius(5)
+                            .foregroundStyle(.white)
+                        
+                        Rectangle()
+                            .frame(width: 390, height: 50)
+                            .cornerRadius(5)
+                            .foregroundStyle(.white.opacity(0.2))
+                    }
+                    VStack {
+                            HStack {
+                                Image(systemName: "play.fill")
+                                Text("**Continuar**")
+                            }
+                            .frame(width: 390, height: 50)
+                            HStack {
+                                Image(systemName: "arrow.down.to.line")
+                                Text("**Baixar T2:E8**")
+                            }.foregroundStyle(.white)
+                                .frame(width: 390, height: 50)
+                    }
                 }
                 Spacer()
             }
