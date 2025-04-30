@@ -36,15 +36,15 @@ struct ContentView: View {
     ]
     
     @State var auxStr = Location(
-        name: "Pirâmides de Gizé",
+        name: "",
         flag:
-            "https://upload.wikimedia.org/wikipedia/commons/a/af/All_Gizah_Pyramids.jpg",
-        description: "Pirâmides de Gizé é um sítio arqueológico localizado no planalto de Gizé, nos arredores do Cairo, Egito. A necrópole está localizada a cerca de 9 km do interior do deserto para a cidade velha de Gizé, no Nilo, e cerca de 25 km a sudoeste do centro da cidade do Cairo, no local da antiga cidade egípcia de Mênfis. As pirâmides, que sempre tiveram grande importância como emblemas do antigo Egito no imaginário ocidental, foram popularizadas nos tempos helenísticos, quando a Grande Pirâmide foi listada por Antípatro de Sídon como uma das Sete Maravilhas do Mundo. É, de longe, a mais antiga das maravilhas do mundo antigo e a única que ainda existe.",
+            "",
+        description: "",
         latitude: 29.9792,
         longitude: 31.1320
     )
     
-    //FAZER VARIAVEL AUXILIAR DA SHEET
+
     
     @State private var position = MapCameraPosition.region(
         MKCoordinateRegion(
@@ -62,6 +62,7 @@ struct ContentView: View {
                         
                         Button() {
                             showSheet.toggle()
+                            auxStr = e
                         }label: {
                             Image(systemName: "mappin.circle.fill")
                                 .resizable()
@@ -71,7 +72,7 @@ struct ContentView: View {
                             ZStack{
                                 Color(.marelo)
                                 VStack{
-                                    AsyncImage(url: URL(string: e.flag)) { image in
+                                    AsyncImage(url: URL(string: auxStr.flag)) { image in
                                         image
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
@@ -84,26 +85,32 @@ struct ContentView: View {
                                     .frame(width:300)
                                     .padding()
                                     
-                                    Text(e.name)
+                                    Text(auxStr.name)
                                         .padding()
                                         .font(.system(size:25))
-                                    Text(e.description)
+                                    Text(auxStr.description)
                                         .frame(width: 350)
                                         .background(Color.brown)
                                     Spacer()
                                 }
                             }
                         }
-                        
                     }
                 }
             }.ignoresSafeArea()
-            VStack {
-                Picker("Seleciona a localização", selection: $auxStr) {
-                    ForEach(locationArray, id: \.self) { e in Text(e.name)}
-                }.background(Color.marelo)
-                    .frame(height: 50)
+                VStack {
+                    Picker("Seleciona a localização", selection: $auxStr) {
+                        ForEach(locationArray, id: \.self) { e in Text(e.name).onChange(of: auxStr) {i in position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: i.latitude, longitude: i.longitude), span: MKCoordinateSpan(latitudeDelta: 1.5, longitudeDelta: 20)))}}
+                    }.background(Color.marelo)
+                        .frame(height: 50)
                 Spacer()
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Corner Radius@*/10.0/*@END_MENU_TOKEN@*/)
+                            .frame(width:  300, height: 100)
+                            .foregroundStyle(.marelo)
+                        Text("blablablablabalabalab")
+                    }
             }
         }
     }
